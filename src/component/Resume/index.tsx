@@ -6,6 +6,9 @@ import EducationEconomics from "../EducationEconomics"
 import MainCourse from "../MainCourse"
 import ProjectExperience from "../ProjectExperience"
 import ProfessionalSkill from "../ProfessionalSkill"
+import Certificate from "../Certificate"
+import PersonalSummary from "../PersonalSummary"
+import template from "../TemplateComponent"
 const Resume:FC = ()=>{
     return (
         <>
@@ -25,6 +28,12 @@ const Resume:FC = ()=>{
                 </ModuleCard>
                 <ModuleCard title="专业技能">
                     <ProfessionalSkill></ProfessionalSkill>
+                </ModuleCard>
+                <ModuleCard title="个人总结">
+                    <PersonalSummary></PersonalSummary>
+                </ModuleCard>
+                <ModuleCard title="荣誉与证书">
+                    <Certificate></Certificate>
                 </ModuleCard>
             </Col>
         </Row>
