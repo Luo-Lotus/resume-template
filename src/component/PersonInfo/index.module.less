@@ -1,0 +1,39 @@
+.container{
+    padding: 0px 20px;
+    display: flex;
+    flex-direction: column;
+    .avatar{
+        height: 60%;
+        width: 60%;
+        margin: 0 auto;
+    }
+    .name{
+        font-size: 20px;
+        text-align: center;
+        font-weight: bold;
+        padding: 10px;
+    }
+    .info{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 5px 10%;
+        margin-bottom: 10px;
+        background:#F6F9FF;
+        .label{
+            background-color: #4183FF;
+            padding: 5px 10px;
+            height: 100%;
+            width: calc(32px + 2em);
+            color: white;
+            font-weight: bold;
+        }
+        .value{
+            width: 100%;
+            padding: 0px 10px;
+            text-align: center;
+            word-break:break-all;
+            overflow: hidden;
+        }
+    }
+}
