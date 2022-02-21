@@ -9,7 +9,6 @@ interface info{
 }
 const PersonInfo:FC = ()=>{
     useEffect(()=>{
-        console.log(style.info);
     },[])
     const [data,setData] = useState<info[]>([
         {
@@ -54,7 +53,7 @@ const PersonInfo:FC = ()=>{
             <Avatar className={style.avatar} src={avatar}/>
             <div className={style.name}>罗天翔</div>
             {data.map(x=>
-            <div className={style.info}>
+            <div className={style.info} key={x.label}>
                 <div className={style.  label}>{x.label}</div>
                 {x.value.startsWith("http")?
                 <a className={style.value} href={x.value} >{x.value}</a>:

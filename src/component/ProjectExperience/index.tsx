@@ -32,11 +32,11 @@ const component:FC = ()=>{
     return (
         <>
             {projects.map(project=>(
-                <div className={style.container}>
+                <div className={style.container} key={project.name}>
                     <div className={style.title}>{project.name}</div>
                     <ul>
                         {project.content.map(introduce=>(
-                            <li>{introduce}</li>
+                            <li key={introduce}>{introduce}</li>
                         ))}
                     </ul>
                 </div>

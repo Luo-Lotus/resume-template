@@ -13,7 +13,7 @@ const component:FC = ()=>{
     return (
         <>
             {skills.map((item,index)=>(
-                <div><strong>{index+1}.{item}</strong></div>
+                <div key={item}><strong>{index+1}.{item}</strong></div>
             ))}
         </>
     )

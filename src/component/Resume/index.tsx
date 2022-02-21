@@ -1,6 +1,6 @@
 import {FC} from "react"
 import PersonInfo from "../PersonInfo/index"
-import {Row,Col} from 'antd'
+import {Row,Col,Button} from 'antd'
 import ModuleCard from "../ModuleCard"
 import EducationEconomics from "../EducationEconomics"
 import MainCourse from "../MainCourse"
@@ -9,9 +9,36 @@ import ProfessionalSkill from "../ProfessionalSkill"
 import Certificate from "../Certificate"
 import PersonalSummary from "../PersonalSummary"
 import template from "../TemplateComponent"
+import html2canvas from 'html2canvas';
+import jsPDF from "jspdf"
 const Resume:FC = ()=>{
+    const clickHandle = ()=>{
+        html2canvas(document.getElementById("resume-container") as HTMLElement)
+        .then(function(canvas) {
+            const imgData = canvas.toDataURL('image/jpeg');
+            document.body.appendChild(canvas);
+            const img  = new Image()
+            img.src = imgData
+            img.onload = function(){
+                console.log(111111);
+                
+                const _this = this as HTMLImageElement
+                if (_this.width > _this.height) {
+                    var doc = new jsPDF('l', 'mm', [_this.width * 0.225, _this.height * 0.225]);
+                   } else {
+                    var doc = new jsPDF('p', 'mm', [_this.width * 0.225, _this.height * 0.225]);
+                   }
+                doc.addImage(imgData, 'jpeg', 0, 0, _this.width * 0.225, _this.height * 0.225);
+                //根据下载保存成不同的文件名
+                doc.save('report_pdf_' + new Date().getTime() + '.pdf');
+                console.log(doc);
+                   
+                }
+            
+        });
+    }
     return (
-        <>
+        <div style={{padding:"40px"}} id="resume-container">
         <Row className="container">
             <Col span={8} className="info">
                 <PersonInfo></PersonInfo>
@@ -37,7 +64,8 @@ const Resume:FC = ()=>{
                 </ModuleCard>
             </Col>
         </Row>
-        </>
+        <Button onClick={clickHandle}>截图</Button>
+        </div>
     )
 }
 export default Resume
