@@ -9,8 +9,8 @@ const component:FC = ()=>{
     
     return (
         <>
-            {projectExperience.filter((x:any)=>x!=null&&x!=undefined&&Object.keys(x).length>0).map((project:any)=>(
-                <div className={style.container} key={project.projectName}>
+            {projectExperience.filter((x:any)=>x!=null&&x!=undefined&&Object.keys(x).length>0).map((project:any,index:number)=>(
+                <div className={style.container} key={project.projectName+index}>
                     <div className={style.title}>{project.projectName}</div>
                     <ul>
                         {project?project.description.split(/[\n]/).map((introduce:any)=>(

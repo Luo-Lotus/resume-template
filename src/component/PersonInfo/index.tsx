@@ -14,8 +14,8 @@ const PersonInfo:FC = ()=>{
         <div className={style.container}>
             <Avatar className={style.avatar} src={userInfo.avatar||avatar}/>
             <div className={style.name}>{userInfo.name}</div>
-            {userInfo.otherInfo.filter((x:any)=>x!=null&&x!=undefined&&Object.keys(x).length!=0).map((x:{label:string,value:string})=>
-            <div className={style.info} key={x.label}>
+            {userInfo.otherInfo.map((x:{label:string,value:string},index:number)=>
+            <div className={style.info} key={x.label+index}>
                 <div className={style.label}>{x.label}</div>
                 <div className={style.value}>{x.value}</div>
             </div>
