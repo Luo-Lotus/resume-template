@@ -1,11 +1,17 @@
 import {Button, Card, DatePicker, Form, Input,Space} from "antd";
 import { userInfo } from "os";
-import {FC,useState} from "react"
+import {FC,useState,useContext,Dispatch} from "react"
 import style from "./index.module.less"
+import EditbleText from "../EditbleText"
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from "moment"
+import{dataContext,Component} from "../dataContext";
 const component:FC = ()=>{
-   const [form, setForm] = useState({
+    //@ts-ignore
+    const {data,dispatch} = useContext(dataContext)
+    console.log(data);
+    
+    const [form, setForm] = useState({
         userInfo:{
             avatar:"hh",
             name:"罗天翔",
@@ -13,21 +19,26 @@ const component:FC = ()=>{
                 {label:"学历",value:"本科"}
             ]
         },
-        educationEconomics:{
+        educationEconomics:[{
             school:"",
             marjor:"",
             college:"",
             Education:"",
             time:""
-        }
+        }],
+        professionalSkill:``,
+        personalSummary:`哈哈哈哈`,
+        certificate:``
+    
    })
     const formChange = (value:any,allValue:any)=>{
         setForm(allValue)
         console.log(form);
-        
    }
     const Item = Form.Item
     return (
+        <>
+        <Button onClick={()=>dispatch({index:0,data:form})}>分发</Button>
         <Form
          style={{padding:"10px"}} onValuesChange={formChange}
          initialValues={form}
@@ -60,7 +71,7 @@ const component:FC = ()=>{
                         ))}
                         <Form.Item>
                         <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                            Add field
+                            点击添加信息
                         </Button>
                         </Form.Item>
                     </>
@@ -68,29 +79,62 @@ const component:FC = ()=>{
                 </Form.List>
             </Card>
             <Card title="教育经历">
-                <Form.Item name={["educationEconomics","school"]} label="学校">
-                    <Input></Input>
-                </Form.Item>
-                <Form.Item name={["educationEconomics","Education"]} label="学历">
-                    <Input></Input>
-                </Form.Item>
-                <Form.Item name={["educationEconomics","marjor"]} label="专业">
-                    <Input></Input>
-                </Form.Item>
-                <Form.Item name={["educationEconomics","college"]} label="学院">
-                    <Input></Input>
-                </Form.Item>
-                <Form.Item name={["educationEconomics","date"]} label="时间">
-                    <DatePicker.RangePicker format={'YYYY年MM月'} picker="month"></DatePicker.RangePicker>
-                </Form.Item>
+                <Form.List name={["educationEconomics"]}>
+                    {(fields,{add,remove})=>(
+                        <>
+                        {fields.map(({ key, name, ...restField })=>(
+                        <Card key={key}>
+                            <Form.Item name={[name,"school"]} label="学校">
+                                <Input></Input>
+                            </Form.Item>
+                            <Form.Item name={[name,"Education"]} label="学历">
+                                <Input></Input>
+                            </Form.Item>
+                            <Form.Item name={[name,"marjor"]} label="专业">
+                                <Input></Input>
+                            </Form.Item>
+                            <Form.Item name={[name,"college"]} label="学院">
+                                <Input></Input>
+                            </Form.Item>
+                            <Form.Item name={[name,"date"]} label="时间">
+                                <DatePicker.RangePicker format={'YYYY年MM月'} picker="month"></DatePicker.RangePicker>
+                            </Form.Item>
+                            <Button type="dashed" onClick={() => remove(key)} block icon={<PlusOutlined />}>
+                            删除该项
+                        </Button>
+
+                        </Card>
+                        ))}
+                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                            点击添加教育经历
+                        </Button>
+                        </>
+                    )}
+                </Form.List>
             </Card>
             <Card title="主要课程">
                 <Form.Item name={"mainCourse"}>
                     <Input.TextArea></Input.TextArea>
                 </Form.Item>
             </Card>
+            <Card title="专业技能">
+                <Form.Item name={"professionalSkill"}>
+                    <Input.TextArea></Input.TextArea>
+                </Form.Item>
+            </Card>
+            <Card title="个人总结">
+                <Form.Item name={"personalSummary"}>
+                    <Input.TextArea></Input.TextArea>
+                </Form.Item>
+            </Card>
+            <Card title="荣誉证书">
+                <Form.Item name={"certificate"}>
+                    <Input.TextArea></Input.TextArea>
+                </Form.Item>
+            </Card>
             </Space>
         </Form>
+    </>
     )
 }
 export default component;
