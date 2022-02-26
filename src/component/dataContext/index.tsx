@@ -7,9 +7,6 @@ interface actionType{
 
 export const dataContext = createContext({})
 const reducer = (state:any,action:actionType)=>{
-    console.log(action);
-    console.log(state);
-    
     switch(action.index) {
         case 0:
           return action.data
