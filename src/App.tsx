@@ -7,21 +7,19 @@ import Resume from "./component/Resume"
 import Edit from "./component/Edit"
 import EditbleText from "./component/EditbleText"
 import {Component} from './component/dataContext'
-const {TabPane} = Tabs
 const App:FC = () => {
-  const [tabs,setTabs] = useState<string[]>(["前端简历","后端简历"])
   return (
-    <div className="app">
+    <div className="app" style={{minWidth:"992px"}}>
       <Component>
         <Row>
-          <Col span={6}>
+          <Col span={6} lg={6}>
             <Affix >
               <div style={{overflow:'auto',height:"100vh"}}>
                 <Edit></Edit>
               </div>
             </Affix>
           </Col>
-          <Col span={18}>
+          <Col span={18} lg={18}>
             <Resume></Resume>
           </Col>
         </Row>

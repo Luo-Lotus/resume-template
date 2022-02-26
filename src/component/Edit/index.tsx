@@ -106,7 +106,7 @@ const component:FC = ()=>{
                             <Form.Item name={[name,"description"]} label="在校经历">
                                 <Input.TextArea autoSize></Input.TextArea>
                             </Form.Item>
-                            <Button type="dashed" onClick={() => remove(key)} block icon={<MinusCircleOutlined />}>
+                            <Button type="dashed" danger onClick={() => remove(key)} block icon={<MinusCircleOutlined />}>
                             删除该项
                         </Button>
 
@@ -141,7 +141,7 @@ const component:FC = ()=>{
                             <Form.Item name={[name,"description"]} label="描述">
                                 <Input.TextArea autoSize></Input.TextArea>
                             </Form.Item>
-                            <Button type="dashed" onClick={() => remove(key)} block icon={<MinusCircleOutlined />}>
+                            <Button type="dashed" danger onClick={() => remove(key)} block icon={<MinusCircleOutlined />}>
                             删除该项
                         </Button>
 

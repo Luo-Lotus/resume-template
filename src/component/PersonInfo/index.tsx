@@ -16,7 +16,7 @@ const PersonInfo:FC = ()=>{
             <div className={style.name}>{userInfo.name}</div>
             {userInfo.otherInfo.filter((x:any)=>x!=null&&x!=undefined&&Object.keys(x).length!=0).map((x:{label:string,value:string})=>
             <div className={style.info} key={x.label}>
-                <div className={style.  label}>{x.label}</div>
+                <div className={style.label}>{x.label}</div>
                 <div className={style.value}>{x.value}</div>
             </div>
             )}
