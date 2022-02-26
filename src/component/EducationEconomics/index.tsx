@@ -1,18 +1,25 @@
-import {FC} from "react"
+import {FC, useContext} from "react"
+import { dataContext } from "../dataContext"
 import style from "./index.module.less"
 
 const component:FC = ()=>{
+    //@ts-ignore
+    const {data:{educationEconomics}} = useContext(dataContext)
     return (
-        <div className={style.container}>
-            <div className={style.school}>
-                <div><strong>电子科技大学成都学院 本科</strong></div>
-                <div>2019.9-2023.6</div>
+    <div>
+            {educationEconomics.filter((x:any)=>x!=null).map((x:any)=>(
+            <div className={style.container} key={x.school}>
+                <div className={style.school}>
+                    <div><strong>{x.school} {x.education}</strong></div>
+                    <div>{x.date}</div>
+                </div>
+                <div className={style.school}>
+                    <div>{x.marjor} {x.college}</div>
+                    <div></div>
+                </div>
+                <div>{x.description}</div>
             </div>
-            <div className={style.school}>
-                <div>数据科学与大数据技术 计算机学院</div>
-                <div>成都</div>
-            </div>
-        </div>
-    )
+            ))}
+    </div>)
 }
 export default component

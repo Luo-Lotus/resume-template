@@ -1,44 +1,48 @@
-import {Button, Card, DatePicker, Form, Input,Space} from "antd";
+import {Button, Card, DatePicker, Form, Input,Space, Upload,message} from "antd";
 import { userInfo } from "os";
-import {FC,useState,useContext,Dispatch} from "react"
+import {FC,useState,useContext,Dispatch, useEffect} from "react"
 import style from "./index.module.less"
 import EditbleText from "../EditbleText"
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from "moment"
 import{dataContext,Component} from "../dataContext";
+import { log } from "console";
 const component:FC = ()=>{
     //@ts-ignore
     const {data,dispatch} = useContext(dataContext)
-    console.log(data);
-    
-    const [form, setForm] = useState({
-        userInfo:{
-            avatar:"hh",
-            name:"罗天翔",
-            otherInfo:[
-                {label:"学历",value:"本科"}
-            ]
-        },
-        educationEconomics:[{
-            school:"",
-            marjor:"",
-            college:"",
-            Education:"",
-            time:""
-        }],
-        professionalSkill:``,
-        personalSummary:`哈哈哈哈`,
-        certificate:``
-    
-   })
+    const [form, setForm] = useState(data)
     const formChange = (value:any,allValue:any)=>{
+        dispatch({index:0,data:allValue})
         setForm(allValue)
-        console.log(form);
    }
-    const Item = Form.Item
+   const getBase64 = (file:any) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+   const uploader = {
+    beforeUpload: (file:any) => {
+        const isPNG = (file.type == 'image/jpeg');
+        if (!isPNG) {
+          message.error(`${file.name} 不是图片`);
+        }
+        return false
+      },
+   }
+   const handleUpload = (arg:any)=>{
+        getBase64(arg.file.originFileObj).then(res=>{
+            form.userInfo.avatar = res 
+            setForm(form)
+
+            dispatch({index:0,data:form})
+        })
+        return ""
+   }
     return (
         <>
-        <Button onClick={()=>dispatch({index:0,data:form})}>分发</Button>
         <Form
          style={{padding:"10px"}} onValuesChange={formChange}
          initialValues={form}
@@ -48,8 +52,8 @@ const component:FC = ()=>{
                 <Form.Item label="姓名" name={['userInfo','name']}>
                     <Input></Input>
                 </Form.Item>
-                <Form.Item label="头像" name={['userInfo','avatar']}>
-                    <Input></Input>
+                <Form.Item label="头像" getValueFromEvent={handleUpload} name={['userInfo','avatar']}>
+                    <Upload><Button>上传头像</Button></Upload>
                 </Form.Item>
                 <Form.List name={['userInfo','otherInfo']}>
                     {(fields, { add, remove }) => (
@@ -79,7 +83,7 @@ const component:FC = ()=>{
                 </Form.List>
             </Card>
             <Card title="教育经历">
-                <Form.List name={["educationEconomics"]}>
+            <Form.List name={["educationEconomics"]}>
                     {(fields,{add,remove})=>(
                         <>
                         {fields.map(({ key, name, ...restField })=>(
@@ -87,7 +91,7 @@ const component:FC = ()=>{
                             <Form.Item name={[name,"school"]} label="学校">
                                 <Input></Input>
                             </Form.Item>
-                            <Form.Item name={[name,"Education"]} label="学历">
+                            <Form.Item name={[name,"education"]} label="学历">
                                 <Input></Input>
                             </Form.Item>
                             <Form.Item name={[name,"marjor"]} label="专业">
@@ -97,9 +101,12 @@ const component:FC = ()=>{
                                 <Input></Input>
                             </Form.Item>
                             <Form.Item name={[name,"date"]} label="时间">
-                                <DatePicker.RangePicker format={'YYYY年MM月'} picker="month"></DatePicker.RangePicker>
+                                <Input></Input>
                             </Form.Item>
-                            <Button type="dashed" onClick={() => remove(key)} block icon={<PlusOutlined />}>
+                            <Form.Item name={[name,"description"]} label="在校经历">
+                                <Input.TextArea autoSize></Input.TextArea>
+                            </Form.Item>
+                            <Button type="dashed" onClick={() => remove(key)} block icon={<MinusCircleOutlined />}>
                             删除该项
                         </Button>
 
@@ -114,22 +121,47 @@ const component:FC = ()=>{
             </Card>
             <Card title="主要课程">
                 <Form.Item name={"mainCourse"}>
-                    <Input.TextArea></Input.TextArea>
+                    <Input.TextArea autoSize></Input.TextArea>
                 </Form.Item>
             </Card>
             <Card title="专业技能">
                 <Form.Item name={"professionalSkill"}>
-                    <Input.TextArea></Input.TextArea>
+                    <Input.TextArea autoSize></Input.TextArea>
                 </Form.Item>
+            </Card>
+            <Card title="项目经历">
+                <Form.List name={["projectExperience"]}>
+                    {(fields,{add,remove})=>(
+                        <>
+                        {fields.map(({ key, name, ...restField })=>(
+                        <Card key={key}>
+                            <Form.Item name={[name,"projectName"]} label="项目名称">
+                                <Input></Input>
+                            </Form.Item>
+                            <Form.Item name={[name,"description"]} label="描述">
+                                <Input.TextArea autoSize></Input.TextArea>
+                            </Form.Item>
+                            <Button type="dashed" onClick={() => remove(key)} block icon={<MinusCircleOutlined />}>
+                            删除该项
+                        </Button>
+
+                        </Card>
+                        ))}
+                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                            点击添加项目
+                        </Button>
+                        </>
+                    )}
+                </Form.List>
             </Card>
             <Card title="个人总结">
                 <Form.Item name={"personalSummary"}>
-                    <Input.TextArea></Input.TextArea>
+                    <Input.TextArea autoSize></Input.TextArea>
                 </Form.Item>
             </Card>
             <Card title="荣誉证书">
                 <Form.Item name={"certificate"}>
-                    <Input.TextArea></Input.TextArea>
+                    <Input.TextArea autoSize></Input.TextArea>
                 </Form.Item>
             </Card>
             </Space>
