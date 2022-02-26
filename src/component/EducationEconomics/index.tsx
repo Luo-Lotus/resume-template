@@ -7,17 +7,17 @@ const component:FC = ()=>{
     const {data:{educationEconomics}} = useContext(dataContext)
     return (
     <div>
-            {educationEconomics.filter((x:any)=>x!=null).map((x:any,index:number)=>(
-            <div className={style.container} key={x.school+index}>
+            {educationEconomics.map((x:any,index:number)=>(
+            <div className={style.container} key={x?.school+index}>
                 <div className={style.school}>
-                    <div><strong>{x.school} {x.education}</strong></div>
-                    <div>{x.date}</div>
+                    <div><strong>{x?.school} {x?.education}</strong></div>
+                    <div>{x?.date}</div>
                 </div>
                 <div className={style.school}>
-                    <div>{x.marjor} {x.college}</div>
+                    <div>{x?.marjor} {x?.college}</div>
                     <div></div>
                 </div>
-                <div>{x.description}</div>
+                <div>{x?.description}</div>
             </div>
             ))}
     </div>)

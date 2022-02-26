@@ -12,17 +12,6 @@ const component:FC = ()=>{
     const {data,dispatch} = useContext(dataContext)
     const [form, setForm] = useState(data)
     const formChange = (value:any,allValue:any)=>{
-        allValue.userInfo.otherInfo = allValue.userInfo.otherInfo.map((x:any)=>x==undefined||x==null||Object.keys(x).length==0||x.label==undefined?{label:"",value:""}:x)
-        allValue.educationEconomics = allValue.educationEconomics.map((x:any)=>x.school==undefined?{college: "",
-        date: "",
-        description: "",
-        education: "",
-        marjor: "",
-        school: ""}:x)
-        allValue.projectExperience = allValue.projectExperience.map((x:any)=>{
-            return x==undefined||x==null||Object.keys(x).length==0||x.projectName==undefined?{projectName:"",description:""}:x
-        })
-        
         dispatch({index:0,data:allValue})
         setForm(allValue)
    }
@@ -152,7 +141,7 @@ const component:FC = ()=>{
                             <Form.Item name={[name,"description"]} label="描述">
                                 <Input.TextArea autoSize></Input.TextArea>
                             </Form.Item>
-                            <Button type="dashed" danger onClick={() => remove(key)} block icon={<MinusCircleOutlined />}>
+                            <Button type="dashed" danger onClick={() => remove(name)} block icon={<MinusCircleOutlined />}>
                             删除该项
                         </Button>
 
